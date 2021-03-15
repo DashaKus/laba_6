@@ -76,9 +76,10 @@ public class MainFrame extends JFrame {
         Action magnetism =new AbstractAction("магнетизм") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                field.magnetism();
+              // field.magnetism(this);
                 pauseMenuItem.setEnabled(false);
                 resumeMenuItem.setEnabled(true);
+                magnetismMenuItem.setEnabled(false);
             }
         };
         magnetismMenuItem=controlMenu.add(magnetism);

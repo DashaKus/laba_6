@@ -19,6 +19,15 @@ public class BouncingBall implements Runnable {
 
     // Вертикальная и горизонтальная компонента скорости
     private int speed;
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     private double speedX;
     private double speedY;
 
@@ -75,6 +84,33 @@ public class BouncingBall implements Runnable {
                 } else if (y + speedY >= field.getHeight() - radius) {
 // Достигли нижней стенки
                     speedY = -speedY;
+                    y = new Double(field.getHeight() - radius).intValue();
+                } else {
+// Просто смещаемся
+                    x += speedX;
+                    y += speedY;
+                    // Засыпаем на X миллисекунд, где X определяется
+// исходя из скорости
+// Скорость = 1 (медленно), засыпаем на 15 мс.
+// Скорость = 15 (быстро), засыпаем на 1 мс.
+                    Thread.sleep(16 - speed);
+                }
+                field.magnetism(this);
+                if (x + speedX <= radius) {
+                    // Достигли левой стенки, отскакиваем право
+                    speedX = 0;
+                    x = radius;
+                } else if (x + speedX >= field.getWidth() - radius) {
+                    // Достигли правой стенки, отскок влево
+                    speedX = 0;
+                    x = new Double(field.getWidth() - radius).intValue();
+                } else if (y + speedY <= radius) {
+// Достигли верхней стенки
+                    speedY = 0;
+                    y = radius;
+                } else if (y + speedY >= field.getHeight() - radius) {
+// Достигли нижней стенки
+                    speedY = 0;
                     y = new Double(field.getHeight() - radius).intValue();
                 } else {
 // Просто смещаемся

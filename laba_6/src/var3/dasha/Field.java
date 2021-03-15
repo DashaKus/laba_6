@@ -41,14 +41,17 @@ public class Field extends JPanel {
 
     public synchronized void pause(){
         paused=true;
-        magnetism=false;
+      //  magnetism=false;
     }
 
     public synchronized void resume(){
         paused=false;
-        magnetism=false;
+       // magnetism=false;
         // Будим все ожидающие продолжения потоки
         notify();
+    }
+    public synchronized void magnetism(BouncingBall bouncingBall){
+        magnetism = true;
     }
     // Синхронизированный метод проверки, может ли мяч двигаться
 // (не включен ли режим паузы?)
@@ -58,8 +61,5 @@ public class Field extends JPanel {
             wait();
         }
     }
-    public synchronized void magnetism(){
-        magnetism = true;
-        paused=false;
-    }
+
 }
