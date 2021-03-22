@@ -41,22 +41,36 @@ public class Field extends JPanel {
 
     public synchronized void pause(){
         paused=true;
-      //  magnetism=false;
     }
 
     public synchronized void resume(){
         paused=false;
        // magnetism=false;
         // Будим все ожидающие продолжения потоки
-        notify();
+        notifyAll();
     }
-    public synchronized void magnetism(BouncingBall bouncingBall){
+    public synchronized void magnetismTrue() {
         magnetism = true;
+       // System.out.println("true");
+    }
+
+    public synchronized void magnetismFalse() {
+        magnetism = false;
+        notifyAll();
+        // System.out.println("true");
+    }
+    public synchronized void magnetism(BouncingBall ball)throws
+            InterruptedException{
+        if(magnetism){
+            wait();
+            //System.out.println("wait");
+        }
     }
     // Синхронизированный метод проверки, может ли мяч двигаться
 // (не включен ли режим паузы?)
     public synchronized void canMove(BouncingBall ball) throws
             InterruptedException{
+       // magnetism=false;
         if (paused) {
             wait();
         }

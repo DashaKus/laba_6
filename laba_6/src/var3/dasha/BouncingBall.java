@@ -60,7 +60,7 @@ public class BouncingBall implements Runnable {
 
     // Метод run() исполняется внутри потока. Когда он завершает работу,
 // то завершается и поток
-    public void run(){
+    public void run() {
         try {
             while (true) {
 // Синхронизация потоков на самом объекте поля
@@ -70,48 +70,33 @@ public class BouncingBall implements Runnable {
                 field.canMove(this);
                 if (x + speedX <= radius) {
                     // Достигли левой стенки, отскакиваем право
+                    Thread.sleep(1000);
                     speedX = -speedX;
-                    //  speedX = 0;
                     x = radius;
+                    field.magnetism(this);
+                  // System.out.println("отскок лево");
                 } else if (x + speedX >= field.getWidth() - radius) {
                     // Достигли правой стенки, отскок влево
+                    Thread.sleep(1000);
                     speedX = -speedX;
                     x = new Double(field.getWidth() - radius).intValue();
+                    field.magnetism(this);
+                   // System.out.println("отскок право");
                 } else if (y + speedY <= radius) {
 // Достигли верхней стенки
+                    Thread.sleep(1000);
                     speedY = -speedY;
                     y = radius;
-                } else if (y + speedY >= field.getHeight() - radius) {
+                    field.magnetism(this);
+                   // System.out.println("отскок вверх");
+
+                } else if (y + speedY >= field.getHeight() - radius-100) {
 // Достигли нижней стенки
+                    Thread.sleep(1000);
                     speedY = -speedY;
-                    y = new Double(field.getHeight() - radius).intValue();
-                } else {
-// Просто смещаемся
-                    x += speedX;
-                    y += speedY;
-                    // Засыпаем на X миллисекунд, где X определяется
-// исходя из скорости
-// Скорость = 1 (медленно), засыпаем на 15 мс.
-// Скорость = 15 (быстро), засыпаем на 1 мс.
-                    Thread.sleep(16 - speed);
-                }
-                field.magnetism(this);
-                if (x + speedX <= radius) {
-                    // Достигли левой стенки, отскакиваем право
-                    speedX = 0;
-                    x = radius;
-                } else if (x + speedX >= field.getWidth() - radius) {
-                    // Достигли правой стенки, отскок влево
-                    speedX = 0;
-                    x = new Double(field.getWidth() - radius).intValue();
-                } else if (y + speedY <= radius) {
-// Достигли верхней стенки
-                    speedY = 0;
-                    y = radius;
-                } else if (y + speedY >= field.getHeight() - radius) {
-// Достигли нижней стенки
-                    speedY = 0;
-                    y = new Double(field.getHeight() - radius).intValue();
+                    y = new Double(field.getHeight() - radius-100).intValue();
+                    field.magnetism(this);
+                   // System.out.println("отскок вниз");
                 } else {
 // Просто смещаемся
                     x += speedX;
@@ -123,9 +108,8 @@ public class BouncingBall implements Runnable {
                     Thread.sleep(16 - speed);
                 }
             }
-        } catch (InterruptedException ex) {
-// Если нас прервали, то ничего не делаем
-// и просто выходим (завершаемся)
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 // Метод прорисовки самого себя

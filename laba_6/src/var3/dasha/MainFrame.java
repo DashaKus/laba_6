@@ -17,7 +17,8 @@ public class MainFrame extends JFrame {
 
     private  JMenuItem  pauseMenuItem;
     private  JMenuItem resumeMenuItem;
-    private  JMenuItem magnetismMenuItem;
+    private  JMenuItem magnetismOnMenuItem;
+    private  JMenuItem magnetismOffMenuItem;
 
     public Field field=new Field();
 
@@ -45,7 +46,8 @@ public class MainFrame extends JFrame {
                    // Ни один из пунктов меню не являются
                     // доступными - сделать доступным "Паузу"
                    pauseMenuItem.setEnabled(true);
-
+                   magnetismOnMenuItem.setEnabled(true);
+                   magnetismOffMenuItem.setEnabled(false);
                }
             }
         };
@@ -59,6 +61,8 @@ public class MainFrame extends JFrame {
                 field.pause();
                 pauseMenuItem.setEnabled(false);
                 resumeMenuItem.setEnabled(true);
+                magnetismOnMenuItem.setEnabled(true);
+                magnetismOffMenuItem.setEnabled(false);
             }
         };
         pauseMenuItem=controlMenu.add(pauseAction);
@@ -69,21 +73,32 @@ public class MainFrame extends JFrame {
                 field.resume();
                 pauseMenuItem.setEnabled(true);
                 resumeMenuItem.setEnabled(false);
+                magnetismOnMenuItem.setEnabled(true);
+                magnetismOffMenuItem.setEnabled(false);
             }
         };
         resumeMenuItem=controlMenu.add(resumeAction);
         resumeMenuItem.setEnabled(false);
-        Action magnetism =new AbstractAction("магнетизм") {
+        Action magnetismOn =new AbstractAction("включить магнетизм") {
             @Override
             public void actionPerformed(ActionEvent e) {
-              // field.magnetism(this);
-                pauseMenuItem.setEnabled(false);
-                resumeMenuItem.setEnabled(true);
-                magnetismMenuItem.setEnabled(false);
+                   field.magnetismTrue();
+                magnetismOnMenuItem.setEnabled(false);
+                magnetismOffMenuItem.setEnabled(true);
             }
         };
-        magnetismMenuItem=controlMenu.add(magnetism);
-        magnetismMenuItem.setEnabled(false);
+        magnetismOnMenuItem=controlMenu.add(magnetismOn);
+        magnetismOnMenuItem.setEnabled(false);
+        Action magnetismOff =new AbstractAction("выключить магнетизм") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                field.magnetismFalse();
+                magnetismOffMenuItem.setEnabled(false);
+                magnetismOnMenuItem.setEnabled(true);
+            }
+        };
+        magnetismOffMenuItem=controlMenu.add(magnetismOff);
+        magnetismOffMenuItem.setEnabled(false);
         // Добавить в центр граничной компоновки поле Field
         getContentPane().add(field, BorderLayout.CENTER);
     }
