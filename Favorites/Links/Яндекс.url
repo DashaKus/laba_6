@@ -1,0 +1,9 @@
+[DEFAULT]
+BASEURL=https://www.yandex.ru/?win=430&clid=2376261-0&from=dist_bookmark
+[{000214A0-0000-0000-C000-000000000046}]
+Prop3=19,2
+[InternetShortcut]
+URL=https://www.yandex.ru/?win=430&clid=2376261-0&from=dist_bookmark
+IDList=
+IconFile=C:\Users\User\AppData\Local\MICROS~1\INTERN~1\Services\WWWYAN~1.ICO
+IconIndex=0
